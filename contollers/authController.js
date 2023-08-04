@@ -89,7 +89,7 @@ export function register(req, res) {
         } else {
             passport.authenticate("local")(req, res, function () {
                 console.log("User registered: ", user);
-                res.status(201).json({ message: "Registration successful", user: user });
+                res.status(201).json("ok");
             });
         }
     });
