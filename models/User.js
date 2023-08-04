@@ -24,9 +24,4 @@ userSchema.plugin(passportLocalMongoose, { usernameField : 'email' });
 
 const User = mongoose.model('User', userSchema);
 
-passport.use(User.createStrategy());
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 export default User;
