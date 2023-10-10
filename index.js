@@ -49,7 +49,7 @@ const app = express();
 // Apply middleware
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
-app.use(cors({ credentials: true, origin: "https://sociopedia-aryan.vercel.app/" }));
+app.use(cors({ credentials: true, origin: "sociopedia-4fy2yh1r0-aryan-dahiya-23.vercel.app" }));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json({ extended: true }));
