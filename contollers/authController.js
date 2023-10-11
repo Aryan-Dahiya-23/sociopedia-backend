@@ -54,7 +54,8 @@ export const login = async (req, res) => {
         if (isMatch) {
             jwt.sign({ email, id: user._id }, secret, {}, (err, token) => {
                 if (err) throw err;
-                res.cookie("token", token).json(user);
+                // res.cookie("token", token).json(user);
+                res.status(200).json({ user, token });
             });
         } else {
             return res.status(401).json({ msg: "Invalid credentials. " });
@@ -68,7 +69,10 @@ export const login = async (req, res) => {
 // Verifying
 export const verify = async (req, res) => {
     try {
-        const { token } = req.cookies;
+
+        const token = req.header('Authorization')?.split(' ')[1];
+
+        console.log("token: " + token);
         const decodedToken = jwt.verify(token, secret);
 
         const { email } = decodedToken;
