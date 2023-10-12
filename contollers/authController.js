@@ -15,11 +15,6 @@ const secret = process.env.secret;
 export const register = async (req, res) => {
     try {
         const { fName, lName, email, profileImageUrl, username, password } = req.body;
-        // let profileImageUrl = null;
-
-        // if (req.file) {
-        //     profileImageUrl = req.file.path;
-        // }
 
         const existingEmail = await User.findOne({ email });
         const existingUsername = await User.findOne({ username });

@@ -88,6 +88,24 @@ async function clearCollections() {
 // Call the function to clear the collections
 // clearCollections();
 
+async function clearUserFriends(username) {
+  try {
+    // Find the user with the specified username
+    const user = await User.findOne({ username });
+
+    if (user) {
+      // Clear the 'friends' array
+      user.friends = [];
+      await user.save();
+      console.log(`Friends array cleared for user: ${username}`);
+    } else {
+      console.log(`User not found with username: ${username}`);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
 // Auth Routes
 // app.post("/register", upload.single("profileImage"), register);
 app.post("/register", register);

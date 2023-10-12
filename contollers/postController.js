@@ -63,7 +63,8 @@ export const createPost = async (req, res) => {
 export const fetchPosts = async (req, res) => {
   const { id } = req.query;
   try {
-    const posts = await Post.find({ "createdBy.id": { $ne: id } });
+    // const posts = await Post.find({ "createdBy.id": { $ne: id } });
+    const posts = await Post.find();
     posts.sort(() => Math.random() - 0.5);
     res.status(200).json(posts);
   } catch (error) {
