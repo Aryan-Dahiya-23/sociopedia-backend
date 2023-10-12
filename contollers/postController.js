@@ -1,37 +1,6 @@
 import User from "../models/User.js";
 import Post from "../models/Post.js";
 
-// export const createPost = async (req, res) => {
-
-//     try {
-//         const { userId, caption } = req.body;
-
-//         let filePath = null;
-
-//         if (req.file) {
-//             filePath = req.file.path;
-//         }
-
-//         const user = await User.findById(userId);
-
-//         const createdBy = {
-//             id: user._id,
-//             name: user.fName + " " + user.lName,
-//             profileImageUrl: user.profileImageUrl
-//         }
-
-//         const newPost = new Post({ caption, imageUrl: filePath, createdBy: createdBy });
-//         const savedPost = await newPost.save();
-//         const postId = savedPost._id;
-
-//         await User.updateOne({ _id: userId }, { $push: { posts: postId } });
-
-//         res.status(200).json({ message: 'Post created successfully' });
-//     } catch (error) {
-//         res.status(400).json({ message: "An error Occured, please try again!" });
-//     }
-// }
-
 export const createPost = async (req, res) => {
   try {
     const { userId, caption, picturePath } = req.body;
@@ -65,7 +34,6 @@ export const fetchPosts = async (req, res) => {
   try {
     // const posts = await Post.find({ "createdBy.id": { $ne: id } });
     const posts = await Post.find();
-    posts.sort(() => Math.random() - 0.5);
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Error fetching posts" });

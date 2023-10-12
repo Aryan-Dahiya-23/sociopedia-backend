@@ -49,7 +49,9 @@ const app = express();
 // Apply middleware
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+// app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "https://sociopedia-aryan.vercel.app" }));
+// app.use(cors({ credentials: true, origin: "https://socialmedia-frontend-heow.vercel.app" }));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json({ extended: true }));
@@ -67,44 +69,6 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
-
-async function clearCollections() {
-  try {
-    // Clear the User collection
-    await User.deleteMany({});
-    console.log("User collection cleared.");
-
-    // Clear the Post collection
-    await Post.deleteMany({});
-    console.log("Post collection cleared.");
-
-    // Close the database connection
-    mongoose.connection.close();
-  } catch (error) {
-    console.error("Error clearing collections:", error);
-  }
-}
-
-// Call the function to clear the collections
-// clearCollections();
-
-async function clearUserFriends(username) {
-  try {
-    // Find the user with the specified username
-    const user = await User.findOne({ username });
-
-    if (user) {
-      // Clear the 'friends' array
-      user.friends = [];
-      await user.save();
-      console.log(`Friends array cleared for user: ${username}`);
-    } else {
-      console.log(`User not found with username: ${username}`);
-    }
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-}
 
 // Auth Routes
 // app.post("/register", upload.single("profileImage"), register);
