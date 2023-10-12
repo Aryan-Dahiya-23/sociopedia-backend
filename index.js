@@ -50,7 +50,7 @@ const app = express();
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 // app.use(cors({ credentials: true, origin: "https://sociopedia-aryan.vercel.app" }));
-app.use(cors({ credentials: true, origin: "https://long-red-ray-tie.cyclic.app" }));
+app.use(cors({ credentials: true, origin: "https://socialmedia-frontend-heow.vercel.app" }));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json({ extended: true }));
