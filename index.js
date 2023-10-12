@@ -10,36 +10,36 @@ import mongoose from "mongoose";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import {
-    register,
-    login,
-    verify,
-    logout,
+  register,
+  login,
+  verify,
+  logout,
 } from "./contollers/authController.js";
 import {
-    user,
-    updateUser,
-    updateFriend,
-    fetchFriends,
-    fetchAccounts,
-    addNotification,
+  user,
+  updateUser,
+  updateFriend,
+  fetchFriends,
+  fetchAccounts,
+  addNotification,
 } from "./contollers/userController.js";
 import {
-    createPost,
-    fetchPosts,
-    updatePost,
-    fetchMyPosts,
-    fetchLikedPosts,
-    fetchSavedPosts,
+  createPost,
+  fetchPosts,
+  updatePost,
+  fetchMyPosts,
+  fetchLikedPosts,
+  fetchSavedPosts,
 } from "./contollers/postController.js";
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./uploads");
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, `${Date.now()}-${file.originalname}`);
-    },
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
 });
 const upload = multer({ storage });
 
@@ -57,33 +57,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 mongoose
-    .connect(process.env.MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => {
-        console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-        console.error("Error connecting to MongoDB:", err);
-    });
-
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  });
 
 async function clearCollections() {
-    try {
-        // Clear the User collection
-        await User.deleteMany({});
-        console.log('User collection cleared.');
+  try {
+    // Clear the User collection
+    await User.deleteMany({});
+    console.log("User collection cleared.");
 
-        // Clear the Post collection
-        await Post.deleteMany({});
-        console.log('Post collection cleared.');
+    // Clear the Post collection
+    await Post.deleteMany({});
+    console.log("Post collection cleared.");
 
-        // Close the database connection
-        mongoose.connection.close();
-    } catch (error) {
-        console.error('Error clearing collections:', error);
-    }
+    // Close the database connection
+    mongoose.connection.close();
+  } catch (error) {
+    console.error("Error clearing collections:", error);
+  }
 }
 
 // Call the function to clear the collections
@@ -114,10 +113,10 @@ app.get("/fetchlikedposts", fetchLikedPosts);
 app.get("/fetchsavedposts", fetchSavedPosts);
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
+  res.send("Hello World");
 });
 
 const port = process.env.PORT;
 app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+  console.log(`Server is listening on port ${port}`);
 });
