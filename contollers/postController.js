@@ -80,7 +80,7 @@ export const fetchMyPosts = async (req, res) => {
   const { id } = req.query;
   try {
     const posts = await Post.find({ "createdBy.id": id });
-    posts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Error fetching posts" });
