@@ -50,6 +50,7 @@ export const login = async (req, res) => {
             jwt.sign({ email, id: user._id }, secret, {}, (err, token) => {
                 if (err) throw err;
                 // res.cookie("token", token).json(user);
+                user.notifications.reverse();
                 res.status(200).json({ user, token });
             });
         } else {
@@ -72,6 +73,7 @@ export const verify = async (req, res) => {
 
         const { email } = decodedToken;
         const user = await User.findOne({ email });
+        user.notifications.reverse();
         res.json(user);
     } catch (err) {
         res.status(401).json({ message: 'Authentication failed' });
