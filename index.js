@@ -64,6 +64,10 @@ mongoose
   })
   .then(() => {
     console.log("Connected to MongoDB");
+    const port = process.env.PORT;
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
@@ -95,9 +99,4 @@ app.get("/fetchsavedposts", fetchSavedPosts);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
-});
-
-const port = process.env.PORT;
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
 });
