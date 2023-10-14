@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
-import multer from "multer";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
@@ -31,17 +30,6 @@ import {
   fetchLikedPosts,
   fetchSavedPosts,
 } from "./contollers/postController.js";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-const upload = multer({ storage });
 
 dotenv.config();
 const app = express();
@@ -75,7 +63,6 @@ mongoose
 
 
 // Auth Routes
-// app.post("/register", upload.single("profileImage"), register);
 app.post("/register", register);
 app.post("/login", login);
 app.post("/logout", logout);
@@ -90,7 +77,6 @@ app.get("/accounts", fetchAccounts);
 app.post("/addnotification/:id", addNotification);
 
 // Post Routes
-// app.post("/createpost", upload.single("file"), createPost);
 app.post("/createpost", createPost);
 app.get("/fetchposts", fetchPosts);
 app.post("/updatepost", updatePost);
