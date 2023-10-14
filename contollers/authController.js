@@ -50,7 +50,7 @@ export const login = async (req, res) => {
             jwt.sign({ email, id: user._id }, secret, {}, (err, token) => {
                 if (err) throw err;
                 // res.cookie("token", token).json(user);
-                user.notifications.reverse();
+                user.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 res.status(200).json({ user, token });
             });
         } else {
@@ -66,14 +66,14 @@ export const login = async (req, res) => {
 export const verify = async (req, res) => {
     try {
 
-        const token = req.header('Authorization')?.split(' ')[1];
+        const token = req.header('Authorization')?.split(' ')[1]
 
         console.log("token: " + token);
         const decodedToken = jwt.verify(token, secret);
 
         const { email } = decodedToken;
         const user = await User.findOne({ email });
-        user.notifications.reverse();
+        user.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         res.json(user);
     } catch (err) {
         res.status(401).json({ message: 'Authentication failed' });

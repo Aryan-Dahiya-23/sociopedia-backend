@@ -73,6 +73,7 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
+
 // Auth Routes
 // app.post("/register", upload.single("profileImage"), register);
 app.post("/register", register);

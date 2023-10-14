@@ -10,11 +10,11 @@ export const user = async (req, res) => {
         if (user) {
             res.status(200).json({ ok: true, user });
         } else {
-            res.status(404).json({ message: 'User not found' });
+            res.status(404).json({ message: "User not found" });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: "Server error" });
     }
 };
 
@@ -52,9 +52,9 @@ export const updateFriend = async (req, res) => {
         console.log(user);
         res.status(200).json(user);
     } else {
-        res.status(500).json({ message: 'Failed to update user' });
+        res.status(500).json({ message: "Failed to update user" });
     }
-}
+};
 
 export const fetchFriends = async (req, res) => {
     const { id } = req.query;
@@ -74,7 +74,7 @@ export const fetchFriends = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 export const fetchAccounts = async (req, res) => {
     const { searchQuery, userId } = req.query;
@@ -83,10 +83,15 @@ export const fetchAccounts = async (req, res) => {
         const users = await User.find({
             _id: { $ne: userId },
             $or: [
-                { username: { $regex: searchQuery, $options: 'i' } },
-                { fName: { $regex: searchQuery, $options: 'i' } },
-                { lName: { $regex: searchQuery, $options: 'i' } },
-                { $and: [{ fName: { $regex: searchQuery, $options: 'i' } }, { lName: { $regex: searchQuery, $options: 'i' } }] },
+                { username: { $regex: searchQuery, $options: "i" } },
+                { fName: { $regex: searchQuery, $options: "i" } },
+                { lName: { $regex: searchQuery, $options: "i" } },
+                {
+                    $and: [
+                        { fName: { $regex: searchQuery, $options: "i" } },
+                        { lName: { $regex: searchQuery, $options: "i" } },
+                    ],
+                },
             ],
         });
 
@@ -98,23 +103,27 @@ export const fetchAccounts = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 export const addNotification = async (req, res) => {
     const { id } = req.params;
-    const { notificationMessage } = req.body;
+    let { notificationMessage } = req.body;
 
     try {
         const user = await User.findById(id);
 
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        if (!user) return res.status(404).json({ message: "User not found" });
 
+        notificationMessage.createdAt = new Date();
         user.notifications.push(notificationMessage);
+
+        console.log(notificationMessage);
+
         await user.save();
 
-        res.status(200).json({ message: 'Notification added successfully' });
+        res.status(200).json({ message: "Notification added successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
