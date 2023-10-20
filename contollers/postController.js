@@ -19,7 +19,7 @@ export const createPost = async (req, res) => {
       createdBy: createdBy,
     });
     const savedPost = await newPost.save();
-    const postId = savedPost._id;
+    const postId = savedPost._id.toString();
 
     await User.updateOne({ _id: userId }, { $push: { posts: postId } });
 
